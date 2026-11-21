@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             onlineStatus: 'ONLINE / EXPLORING',
             aboutKicker: '關於我',
             skillsKicker: '技能與專長',
-            gamesKicker: '遊戲紀錄',
+            gamesKicker: '歷史最高',
             profileTitle: '嗨，我是周以秉',
             profileDescription: '目前就讀池上國中，平常喜歡打電動和吃生魚片。個性是正常人，正在慢慢探索自己喜歡的事物。',
             schoolLabel: 'SCHOOL',
@@ -43,9 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
             debateSkill: '辯論',
             debateDescription: '喜歡跟你唱反調，像她不愛我我卻愛著她',
             gamesTitle: '遊戲紀錄',
-            valorantRank: '段位：金牌 3',
+            valorantRank: '白金一',
+            valorantProgressLabel: '特戰英豪段位進度',
             valorantName: '名稱：愛停在那場雨 我困在那個你#000',
-            brawlRank: '段位：鑽石 3',
+            brawlRank: '鑽石三',
             brawlId: 'ID：Imissherbecause',
             footerText: 'Designed by 周以秉 • HTML, CSS & JS'
         },
@@ -53,11 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
             navLabel: 'Site navigation',
             profileNav: 'About Me',
             skillsNav: 'Skills',
-            gamesNav: 'Game Log',
+            gamesNav: 'Game Records',
             onlineStatus: 'ONLINE / EXPLORING',
             aboutKicker: 'ABOUT ME',
             skillsKicker: 'SKILLS & TALENTS',
-            gamesKicker: 'GAME LOG',
+            gamesKicker: 'PERSONAL BEST',
             profileTitle: 'Hi, I am Zhou Yibing',
             profileDescription: 'I study at Chishang Junior High School. I enjoy gaming and eating sashimi, and I am exploring the things I love.',
             schoolLabel: 'SCHOOL',
@@ -74,10 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
             sportsDescription: '800 m: 2:30\n400 m: 1:06\n100 m: hard to say',
             debateSkill: 'Debate',
             debateDescription: "I like arguing the opposite, like she doesn't love me, but I love her",
-            gamesTitle: 'Game Log',
-            valorantRank: 'Rank: Gold 3',
+            gamesTitle: 'Game Records',
+            valorantRank: 'Platinum I',
+            valorantProgressLabel: 'Valorant rank progress',
             valorantName: 'Name: 愛停在那場雨 我困在那個你#000',
-            brawlRank: 'Rank: Diamond 3',
+            brawlRank: 'Diamond III',
             brawlId: 'ID: Imissherbecause',
             footerText: 'Designed by Zhou Yibing • HTML, CSS & JS'
         }
@@ -282,28 +284,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ----------------------------------------------------
-    // 3. 3D 卡片傾斜特效 (3D Tilt Effect)
-    // ----------------------------------------------------
-    const card = document.querySelector('.card');
-
-    if (card) {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = ((y - centerY) / centerY) * -8;
-            const rotateY = ((x - centerX) / centerX) * 8;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-        });
-    }
 });

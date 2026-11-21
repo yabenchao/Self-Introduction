@@ -184,10 +184,10 @@
             </div>
         </section>
 
-        <!-- 遊戲紀錄分頁 -->
+        <!-- 歷史最高分頁 -->
         <section class="page-panel" id="page-games" hidden>
             <div class="panel-heading">
-                <span class="section-kicker" data-i18n="gamesKicker">GAME LOG</span>
+                <span class="section-kicker" data-i18n="gamesKicker">歷史最高</span>
                 <h2 data-i18n="gamesTitle">遊戲紀錄</h2>
             </div>
             <div class="record-list">
@@ -196,7 +196,16 @@
                     <div class="record-icon"><i class="fa-solid fa-crosshairs"></i></div>
                     <div class="record-details">
                         <strong>特戰英豪</strong>
-                        <span data-i18n="valorantRank">段位：金牌 3</span>
+                        <div class="record-rank-line">
+                            <img class="rank-emblem" src="https://media.valorant-api.com/competitivetiers/564d8e28-c226-3180-6285-e48a390db8b1/15/largeicon.png" alt="" aria-hidden="true">
+                            <span class="record-rank" data-i18n="valorantRank">白金一</span>
+                        </div>
+                        <div class="rank-progress-line">
+                            <div class="rank-progress" role="meter" data-i18n-aria-label="valorantProgressLabel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="66">
+                                <span class="rank-progress-fill"></span>
+                            </div>
+                            <small class="rank-progress-value">66 / 100</small>
+                        </div>
                         <small data-i18n="valorantName">名稱：愛停在那場雨 我困在那個你#000</small>
                     </div>
                     <span class="copy-hint">點擊複製</span>
@@ -206,7 +215,10 @@
                     <div class="record-icon"><i class="fa-solid fa-star"></i></div>
                     <div class="record-details">
                         <strong>荒野亂鬥</strong>
-                        <span data-i18n="brawlRank">段位：鑽石 3</span>
+                        <div class="record-rank-line">
+                            <img class="rank-emblem" src="https://raw.githubusercontent.com/overwolfmobile/brawl-stars-assets/82b46e2fdc0df81e15c1a4200b33ae0a76fa214b/assets/ranks/png/rank_4%403x.png" alt="" aria-hidden="true">
+                            <span class="record-rank" data-i18n="brawlRank">鑽石三</span>
+                        </div>
                         <small data-i18n="brawlId">ID：Imissherbecause</small>
                     </div>
                     <span class="copy-hint">點擊複製</span>

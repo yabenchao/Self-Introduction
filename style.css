@@ -260,7 +260,7 @@ body.light-theme {
     background: var(--accent-cyan);
 }
 
-/* 主卡片容器（3D與毛玻璃效果） */
+/* 主卡片容器 */
 .card {
     background: var(--card-bg);
     backdrop-filter: blur(16px);
@@ -272,8 +272,6 @@ body.light-theme {
     overflow: hidden;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
     position: relative;
-    transition: transform 0.1s ease-out;
-    transform-style: preserve-3d;
     margin-left: 270px;
 }
 
@@ -731,6 +729,7 @@ h1 {
 .record-details {
     position: relative;
     z-index: 1;
+    flex: 1;
     display: grid;
     gap: 4px;
     min-width: 0;
@@ -740,10 +739,54 @@ h1 {
     font-size: 15px;
 }
 
-.record-details span {
+.record-details .record-rank {
     color: var(--accent-cyan);
     font-size: 13px;
     font-weight: 700;
+}
+
+.record-rank-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rank-emblem {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.rank-progress-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rank-progress {
+    flex: 1;
+    height: 6px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.rank-progress-fill {
+    display: block;
+    width: 66%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #63d8ff, #4f8dff);
+    box-shadow: 0 0 10px rgba(99, 216, 255, 0.55);
+}
+
+.record-details .rank-progress-value {
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
 }
 
 .record-details small {
@@ -751,6 +794,10 @@ h1 {
     color: var(--text-secondary);
     font-size: 11px;
     line-height: 1.5;
+}
+
+.light-theme .record-details .record-rank {
+    color: #056b75;
 }
 
 /* 遊戲展示卡片 */
