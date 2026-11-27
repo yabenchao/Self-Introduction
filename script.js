@@ -199,14 +199,38 @@ document.addEventListener('DOMContentLoaded', () => {
     let count = parseInt(localStorage.getItem('user_like_count'), 10) || 0;
     const likesRef = firebaseDatabase ? firebaseDatabase.ref('site/likes') : null;
 
+    function showFloatingHeart(x, y) {
+        if (!likeBtn) return;
+
+        const heart = document.createElement('span');
+        heart.classList.add('floating-heart');
+        heart.textContent = '❤️';
+        heart.style.left = `${x}px`;
+        heart.style.top = `${y}px`;
+        likeBtn.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 1000);
+    }
+
     if (likeCount) {
         likeCount.textContent = count;
     }
 
     if (likesRef) {
+        let previousCount = null;
         likesRef.on('value', (snapshot) => {
             const remoteCount = Number(snapshot.val());
-            count = Number.isFinite(remoteCount) && remoteCount >= 0 ? Math.floor(remoteCount) : 0;
+            const nextCount = Number.isFinite(remoteCount) && remoteCount >= 0
+                ? Math.floor(remoteCount)
+                : 0;
+
+            if (likeBtn && previousCount !== null && nextCount > previousCount) {
+                const buttonRect = likeBtn.getBoundingClientRect();
+                showFloatingHeart(buttonRect.width / 2, buttonRect.height / 2);
+            }
+
+            previousCount = nextCount;
+            count = nextCount;
             if (likeCount) {
                 likeCount.textContent = count;
             }
@@ -234,21 +258,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     likeCount.textContent = count;
                 }
                 localStorage.setItem('user_like_count', count);
+                const buttonRect = likeBtn.getBoundingClientRect();
+                showFloatingHeart(e.clientX - buttonRect.left, e.clientY - buttonRect.top);
             }
-
-            const heart = document.createElement('span');
-            heart.classList.add('floating-heart');
-            heart.innerHTML = '❤️';
-            
-            const rect = likeBtn.getBoundingClientRect();
-            heart.style.left = `${e.clientX - rect.left}px`;
-            heart.style.top = `${e.clientY - rect.top}px`;
-
-            likeBtn.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 1000);
         });
     }
 
