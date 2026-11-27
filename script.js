@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const likeBtn = document.getElementById('like-btn');
     const likeCount = document.getElementById('like-count');
 
-    let count = parseInt(localStorage.getItem('user_like_count')) || 0;
+    let count = parseInt(localStorage.getItem('user_like_count'), 10) || 0;
     const likesRef = firebaseDatabase ? firebaseDatabase.ref('site/likes') : null;
 
     if (likeCount) {
@@ -204,31 +204,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (likesRef) {
-        likesRef.once('value').then((snapshot) => {
-            if (snapshot.exists()) {
-                count = snapshot.val();
+        likesRef.on('value', (snapshot) => {
+            const remoteCount = Number(snapshot.val());
+            count = Number.isFinite(remoteCount) && remoteCount >= 0 ? Math.floor(remoteCount) : 0;
+            if (likeCount) {
                 likeCount.textContent = count;
-                localStorage.setItem('user_like_count', count);
             }
-        }).catch(() => {});
+            localStorage.setItem('user_like_count', count);
+        }, (error) => {
+            console.error('Failed to listen for like count updates:', error);
+        });
     }
 
     if (likeBtn) {
         likeBtn.addEventListener('click', (e) => {
-            // 1. 點擊瞬間馬上 +1（確保 UI 一定會變動）
-            count++;
-            if (likeCount) {
-                likeCount.textContent = count;
-            }
-
-            // 保留本機數字，讓鎖定規則或離線狀態不影響按鈕操作
-            localStorage.setItem('user_like_count', count);
-
             if (likesRef) {
-                likesRef.set(count).catch(() => {});
+                likesRef.transaction((currentCount) => {
+                    const parsedCount = Number(currentCount);
+                    const safeCount = Number.isFinite(parsedCount) && parsedCount >= 0
+                        ? Math.floor(parsedCount)
+                        : 0;
+                    return safeCount + 1;
+                }).catch((error) => {
+                    console.error('Failed to save like:', error);
+                });
+            } else {
+                count++;
+                if (likeCount) {
+                    likeCount.textContent = count;
+                }
+                localStorage.setItem('user_like_count', count);
             }
 
-            // 3. 產生愛心飄浮動畫
             const heart = document.createElement('span');
             heart.classList.add('floating-heart');
             heart.innerHTML = '❤️';
